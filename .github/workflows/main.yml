@@ -1,4 +1,4 @@
-name: Build project
+name: Build and Release project to itch.io
 
 on:
   push:
@@ -44,20 +44,29 @@ jobs:
           
           
   releaseForAllSupportedPlatforms:
-    name: release builds to itch.io
+    name: release ${{ matrix.targetPlatform }} to itch.io
     runs-on: ubuntu-latest
     needs: buildForAllSupportedPlatforms
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:  # this must be the same matrix as used above
+          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          - StandaloneWindows # Build a Windows standalone.
+          - WebGL # WebGL.
     steps:
-      - name: download build artifacts
+      - name: download build artifact
         uses: actions/download-artifact@v2
-      - name: release WebGL
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+      - name: publish to itch.io using butler
         uses: manleydev/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
-          CHANNEL: html
+          CHANNEL: ${{ matrix.targetPlatform }}
           ITCH_GAME: doordash-academy
           ITCH_USER: doordashacademy
-          PACKAGE: Build-WebGL
+          PACKAGE: Build-${{ matrix.targetPlatform }}
         
       
       
