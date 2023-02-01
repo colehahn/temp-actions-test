@@ -41,3 +41,24 @@ jobs:
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
+          
+          
+  releaseForAllSupportedPlatforms:
+    name: release builds to itch.io
+    runs-on: ubuntu-latest
+    needs: buildForAllSupportedPlatforms
+    steps:
+      - name: download build artifacts
+        uses: actions/download-artifact@v2
+      - name: release WebGL
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: html
+          ITCH_GAME: doordash-academy
+          ITCH_USER: doordashacademy
+          PACKAGE: Build-WebGL
+        
+      
+      
+    
