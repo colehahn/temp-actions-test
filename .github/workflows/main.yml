@@ -15,9 +15,9 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          #- StandaloneOSX # Build a macOS standalone (Intel 64-bit).
           - StandaloneWindows # Build a Windows standalone.
-          - WebGL # WebGL.
+          #- WebGL # WebGL.
     steps:
       - uses: actions/checkout@v2
         with:
@@ -51,16 +51,18 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:  # this must be the same matrix as used above
-          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          #- StandaloneOSX # Build a macOS standalone (Intel 64-bit).
           - StandaloneWindows # Build a Windows standalone.
-          - WebGL # WebGL.
+          #- WebGL # WebGL.
     steps:
+      - name: display current files before downloaded
+        run: ls -R
       - name: download build artifact
         uses: actions/download-artifact@v2
         with:
           name: Build-${{ matrix.targetPlatform }}
       - name: display current files to check if it downloaded
-        run: ls -a
+        run: ls -R
       - name: publish to itch.io using butler
         uses: manleydev/butler-publish-itchio-action@master
         env:
