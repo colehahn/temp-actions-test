@@ -61,6 +61,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: Build-${{ matrix.targetPlatform }}
+          path: Build-${{ matrix.targetPlatform }}
       - name: display current files to check if it downloaded
         run: ls -R
       - name: publish to itch.io using butler
