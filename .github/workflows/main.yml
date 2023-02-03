@@ -37,11 +37,8 @@ jobs:
           buildName: DoorDashAcademy_${{ matrix.targetPlatform }}
           projectPath: Doordash Academy/
           versioning: Semantic
-      - name: publish to itch.io using butler
-        uses: manleydev/butler-publish-itchio-action@master
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
-          CHANNEL: TEST-${{ matrix.targetPlatform }}
-          ITCH_GAME: doordash-academy
-          ITCH_USER: doordashacademy
-          PACKAGE: build/${{ matrix.targetPlatform }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+
