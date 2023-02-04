@@ -2,8 +2,6 @@ name: Build and upload artifacts
 
 on:
   push:
-    tags:
-      - "*"
   workflow_dispatch:
 
 jobs:
