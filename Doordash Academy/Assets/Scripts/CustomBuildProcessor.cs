@@ -12,15 +12,12 @@ class CustomBuildProcessor : IPreprocessBuildWithReport
     {
         Debug.Log("MyCustomBuildProcessor.OnPreprocessBuild for target " + report.summary.platform + " at path " + report.summary.outputPath);
         for(int i = 0; i < SceneManager.sceneCountInBuildSettings; i++) {
-            Debug.Log("trying scene number " + i);
-            Scene currScene = SceneManager.GetSceneByBuildIndex(i);
-            Debug.Log("The scene has path " + currScene.path);
-            EditorSceneManager.OpenScene(currScene.path);
+            Scene currScene = EditorSceneManager.OpenScene(SceneUtility.GetScenePathByBuildIndex(i));
             TilemapSerializer serializer = GameObject.FindObjectOfType<TilemapSerializer>();
             if (serializer != null) {
                 serializer.LoadTilemap();
+                EditorSceneManager.SaveScene(currScene);
             }
-            EditorSceneManager.SaveScene(currScene);
             EditorSceneManager.CloseScene(currScene, false);
         }
     }
