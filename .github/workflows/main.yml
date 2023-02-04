@@ -1,4 +1,4 @@
-name: Build and Release project to itch.io
+name: Build and upload artifacts
 
 on:
   push:
