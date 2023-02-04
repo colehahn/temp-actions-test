@@ -20,18 +20,18 @@ public class VehicleBehavior : MonoBehaviour
     private float ignoreIntersectionColliders = 0f;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         velocity = InitialVelocity;
         hitbox = GetComponent<BoxCollider2D>();
-        layerMask = LayerMask.GetMask("Blocking", "Actor", "Ignore Collisions");
+        layerMask = LayerMask.GetMask("Actor", "Ignore Collisions");
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (Time.time > ignoreIntersectionColliders) {
-            layerMask = LayerMask.GetMask("Blocking", "Actor", "Ignore Collisions");
+            layerMask = LayerMask.GetMask("Actor", "Ignore Collisions");
         }
 
         RaycastHit2D hit;
@@ -59,7 +59,7 @@ public class VehicleBehavior : MonoBehaviour
                 transform.position = pos;
             } else {
                 if (hit.distance - lastDetectionRange < -1) {
-                    layerMask = LayerMask.GetMask("Blocking", "Actor");
+                    layerMask = LayerMask.GetMask("Actor");
                     ignoreIntersectionColliders = Time.time + 0.5f;  // Ignore intersection lights for one second.
                 }
                 ApplyBrake();
