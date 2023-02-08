@@ -30,7 +30,7 @@ public class TutorialLevelManager : MonoBehaviour
     void Start()
     {
         currentDelivery = new GameObject[2];
-        score = 0;
+        score = PlayerPrefs.GetInt("score", 0);
         deliveryNumber = 0;
         tutorialIndex = 0;
 
@@ -130,6 +130,7 @@ public class TutorialLevelManager : MonoBehaviour
     // Can be modified later for a better score function.
     void updateScore() {
         score +=  MathF.Truncate(TemperatureBar.value * 100);
+        PlayerPrefs.SetInt("score", (int)score);
     }
 
     void updateTutorialIndex() {

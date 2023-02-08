@@ -11,7 +11,6 @@ class CustomBuildProcessor : IPreprocessBuildWithReport
     public int callbackOrder { get { return 0; } }
     public void OnPreprocessBuild(BuildReport report)
     {
-        Debug.Log("MyCustomBuildProcessor.OnPreprocessBuild for target " + report.summary.platform + " at path " + report.summary.outputPath);
         for(int i = 0; i < SceneManager.sceneCountInBuildSettings; i++) {
             Scene currScene = EditorSceneManager.OpenScene(SceneUtility.GetScenePathByBuildIndex(i));
             TilemapSerializer serializer = GameObject.FindObjectOfType<TilemapSerializer>();
